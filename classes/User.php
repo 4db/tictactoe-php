@@ -1,15 +1,34 @@
 <?php
 
+/**
+ * Class User
+ */
 Class User extends ErrorLog{
+	/**
+	 * @var PDO
+	 */
 	protected $db;
-
+	/**
+	 * @var Game
+	 */
 	protected $game;
+	/**
+	 * @var array
+	 */
+	protected $gameInfo;
+	/**
+	 * @var array
+	 */
+	public $info;
+	/**
+	 * @var array
+	 */
+	public $usersOnline;
 
 	public function __construct() {
 		$this->db = DB::getInstance();
 		$this->game = new Game();
 	}
-
 	/**
 	 * @param string $username
 	 * @return bool|string
@@ -33,10 +52,6 @@ Class User extends ErrorLog{
 			return false;
 		}
 	}
-
-	public $info;
-	public $usersOnline;
-
 	/**
 	 * @param $userId
 	 * @return array|bool
@@ -75,8 +90,6 @@ Class User extends ErrorLog{
 			return false;
 		}
 	}
-
-
 	/**
 	 * Block users for game
 	 * @param $from
@@ -107,7 +120,11 @@ Class User extends ErrorLog{
 			return false;
 		}
 	}
-
+	/**
+	 * @param $from
+	 * @param $to
+	 * @return bool
+	 */
 	public function updateGameId($from, $to) {
 		try {
 			$gameId = $this->game->create($to, $from);
@@ -124,10 +141,11 @@ Class User extends ErrorLog{
 			return false;
 		}
 	}
-
-
-	protected $gameInfo;
-
+	/**
+	 * @param $userId
+	 * @param $ch
+	 * @return bool
+	 */
 	public function getGameId($userId, $ch) {
 		try {
 
@@ -159,7 +177,9 @@ Class User extends ErrorLog{
 			return false;
 		}
 	}
-
+	/**
+	 * @param $board
+	 */
 	public function turn($board){
 		if (isset($this->gameInfo)) {
 			$status = $this->game->update($board, $this->gameInfo);
@@ -168,7 +188,9 @@ Class User extends ErrorLog{
 			}
 		}
 	}
-
+	/**
+	 * @return bool
+	 */
 	public function unBlock() {
 		try {
 			$sql = "UPDATE users SET is_play = 0

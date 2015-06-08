@@ -4,53 +4,57 @@
 	{if $info.id == $info.user_x_id}
 		X,
 		{if $info.turn_x === '1'}
-			you turn.
+			your turn.
 			{assign var="char" value='X'}
 			{assign var="turn" value=true}
 		{else}
-			turn O.
+			now O turn.
 		{/if}
 	{else}
 		O,
 		{if $info.turn_o === '1'}
-			you turn.
+			your turn.
 			{assign var="char" value='O'}
 			{assign var="turn" value=true}
 		{else}
-			turn X.
+			now X turn.
 		{/if}
 	{/if}
 
 <br>
+<b>
 {if $info.status === '1'}
-	X win!
+	X won!
 {elseif $info.status === '2'}
-	O win!
+	O won!
 {elseif $info.status === '3'}
-	Cat's game
+	Cat's game.
 {/if}
+</b>
 
-	<br>
+<br>
 
-	<table>
-		{foreach from=$info.board item=arr}
-			<tr>
-				{foreach from=$arr item=item}
-					<td {if $item === '0' && $turn === true && $info.status === '0'}
-						onclick="game(this, '{$char}');"
-						{/if}>
-						{if $item !== '0'}
-							{if $item ==='1'}
-								X
-							{else}
-								O
-							{/if}
+<table>
+	{foreach from=$info.board item=arr}
+		<tr>
+			{foreach from=$arr item=item}
+				<td {if $item === '0' && $turn === true && $info.status === '0'}
+					onclick="game(this, '{$char}');" style="cursor: pointer"
+					{else}
+					style="cursor: not-allowed"
+					{/if}>
+					{if $item !== '0'}
+						{if $item ==='1'}
+							X
+						{else}
+							O
 						{/if}
-					</td>
-				{/foreach}
-			</tr>
-		{/foreach}
-	</table>
+					{/if}
+				</td>
+			{/foreach}
+		</tr>
+	{/foreach}
+</table>
 
 {if $info.status === '0'}
 <script language="javascript">

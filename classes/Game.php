@@ -1,8 +1,19 @@
 <?php
 
+/**
+ * Class Game - TicTacToe
+ *
+ */
 Class Game extends ErrorLog{
+
+	/**
+	 * @var PDO
+	 */
 	protected $db;
 
+	/**
+	 * @var array
+	 */
 	protected $status = [
 		'in_process' => 0,
 		'win_x' => 1,
@@ -10,11 +21,15 @@ Class Game extends ErrorLog{
 		'cat"s game' => 3
 	];
 
+	/**
+	 * @var array
+	 */
 	protected $board = [
 		[0,0,0],
 		[0,0,0],
 		[0,0,0]
 	];
+
 
 	public function __construct() {
 		$this->db = DB::getInstance();
@@ -56,6 +71,10 @@ Class Game extends ErrorLog{
 		}
 	}
 
+	/**
+	 * @param $board
+	 * @return array
+	 */
 	public function getBoard($board) {
 		$board =  explode('-', $board);
 
@@ -65,6 +84,11 @@ Class Game extends ErrorLog{
 		return $board;
 	}
 
+	/**
+	 * @param $board
+	 * @param $game
+	 * @return bool
+	 */
 	public function update($board, $game) {
 		$status = $this->check($board);
 		$set = ",status='{$status}'";
@@ -88,6 +112,10 @@ Class Game extends ErrorLog{
 		}
 	}
 
+	/**
+	 * @param $board
+	 * @return mixed
+	 */
 	public function check($board) {
 		$board = str_replace(',', '', $board);
 
