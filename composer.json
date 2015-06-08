@@ -1,0 +1,19 @@
+{
+  "name": "Alex Dubinchyk",
+  "description": "Tictactoe",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Dubinchyk",
+      "email": "alexdevby@gmail.com"
+    }
+  ],
+  "require": {
+    "smarty/smarty": "~3.1"
+  },
+  "require-dev": {
+    "maximebf/debugbar": "~1.10"
+  },
+  "minimum-stability": "alpha",
+  "prefer-stable": true
+}

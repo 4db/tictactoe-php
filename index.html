@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		header {
+			background-color:#009688;
+			color:white;
+			text-align:center;
+			padding:5px;
+		}
+		nav {
+			line-height:30px;
+			background-color:#eeeeee;
+			min-height:500px;
+			width:250px;
+			float:left;
+			padding:5px;
+		}
+		section {
+			width:350px;
+			float:left;
+			padding:10px;
+		}
+		footer {
+			background-color:#009688;
+			color:white;
+			clear:both;
+			text-align:center;
+			padding:5px;
+		}
+		td {
+			border:1px solid #d4d4d4;
+			text-align: center;
+			height: 50px;
+			width: 50px;
+		}
+	</style>
+</head>
+<body>
+
+<header>
+	<h1>Tic Tac Toe</h1>
+</header>
+
+<nav>
+	Users online:
+</nav>
+
+<section>
+	<span class="login">
+		Enter username to start game:<br>
+		<input id="username"><input type="button" value="submit" onclick="login()">
+	</span>
+
+</section>
+
+<footer>
+	little game
+</footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script language="JavaScript">
+	var host = 'http://localhost/tic2/server.php';
+	var userId;
+
+	setInterval(function() {
+		getOnlineUsers();
+	}, 5000);
+
+	function getOnlineUsers() {
+		if(userId !== undefined) {
+			$.ajax({
+				type: 'GET',
+				url: host,
+				data: {
+					userId: userId
+				},
+				dataType: 'json',
+				success: function (data) {
+					if(data.html) {
+						$('nav').html(data.html);
+
+						if (data.board && data.board !=='') {
+							$('section').html(data.board);
+						}
+					}
+				}
+			});
+		}
+	}
+
+	function login(){
+		var username = $('#username').val().trim();
+		if (username === '') return $('#username').focus();
+
+		$.ajax({
+			type: 'POST',
+			url: host,
+			data: { username: username },
+			dataType: 'json',
+			success: function (data) {
+				if(data.html && data.userId) {
+					userId = data.userId;
+					$('nav').html(data.html);
+					$('section').html('Choose your opponent.');
+				}
+			}
+		});
+	}
+
+	function play(id) {
+		$.ajax({
+			type: 'POST',
+			url: host,
+			data: {
+				fromUser: userId,
+				toUser:id
+			},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data);
+			}
+		});
+	}
+</script>
+</body>
+</html>
