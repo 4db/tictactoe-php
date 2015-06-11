@@ -20,10 +20,10 @@ if(isset($_POST['username'])) {
 		if (is_array($user->usersOnline) && !empty($user->usersOnline)) {
 			$smarty->assign('users', $user->usersOnline);
 
-			echo json_encode(array(
+			echo json_encode([
 				'userId'=>$id,
 				'html' =>$smarty->fetch('users.tpl'),
-			));
+			]);
 		}
 	}
 }
@@ -42,10 +42,10 @@ else if(isset($_GET['userId'])) {
 
 			$smarty->assign('users', $user->usersOnline);
 
-			echo json_encode(array(
+			echo json_encode([
 				'html' =>$smarty->fetch('users.tpl'),
 				'board' =>$board,
-			));
+			]);
 		}
 	}
 }
